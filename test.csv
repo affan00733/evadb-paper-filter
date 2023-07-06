@@ -1,0 +1,118 @@
+text,label
+"38] Zhong, X., Tang, J., Yepes, A.J.: Publaynet: largest dataset ever for doc-
+ument layout analysis. In: 2019 International Conference on Document
+Analysis and Recognition (ICDAR). pp. 1015–1022. IEEE (Sep 2019).
+https://doi.org/10.1109/ICDAR.2019.00166",0
+"[37] Xu, Y., Li, M., Cui, L., Huang, S., Wei, F., Zhou, M.: Layoutlm: Pre-training of
+text and layout for document image understanding (2019)",0
+"36] Xu, Y., Xu, Y., Lv, T., Cui, L., Wei, F., Wang, G., Lu, Y., Florencio, D., Zhang, C.,
+Che, W., et al.: Layoutlmv2: Multi-modal pre-training for visually-rich document
+understanding. arXiv preprint arXiv:2012.14740 (2020",0
+"35] Wu, Y., Kirillov, A., Massa, F., Lo, W.Y., Girshick, R.: Detectron2. https://
+github.com/facebookresearch/detectron2 (2019)",0
+"34] Wolf, T., Debut, L., Sanh, V., Chaumond, J., Delangue, C., Moi, A., Cistac, P.,
+Rault, T., Louf, R., Funtowicz, M., et al.: Huggingface’s transformers: State-of-
+the-art natural language processing. arXiv preprint arXiv:1910.03771 (201",0
+"33] Studer, L., Alberti, M., Pondenkandath, V., Goktepe, P., Kolonko, T., Fischer,
+A., Liwicki, M., Ingold, R.: A comprehensive study of imagenet pre-training for
+historical document image analysis. In: 2019 International Conference on Document
+Analysis and Recognition (ICDAR). pp. 720–725. IEEE (2019",0
+"[2] Shen, Z., Zhao, J., Dell, M., Yu, Y., Li, W.: Olala: Object-level active learning
+based layout annotation. arXiv preprint arXiv:2010.01762 (2020)",0
+"31] Shen, Z., Zhang, K., Dell, M.: A large dataset of historical japanese documents
+with complex layouts. In: Proceedings of the IEEE/CVF Conference on Computer
+Vision and Pattern Recognition Workshops. pp. 548–549 (20",0
+"30] Schreiber, S., Agne, S., Wolf, I., Dengel, A., Ahmed, S.: Deepdesrt: Deep learning
+for detection and structure recognition of tables in document images. In: 2017 14th
+IAPR international conference on document analysis and recognition (ICDAR).
+vol. 1, pp. 1162–1167. IEEE (2017",0
+"Another focus of LayoutParser is promoting the reusability of layout detection
+models and full digitization pipelines. Similar to many existing deep learning
+libraries, LayoutParser comes with a community model hub for distributing
+layout models. End-users can upload their self-trained models to the model hub,
+and these models can be loaded into a similar interface as the currently available
+LayoutParser pre-trained models. For example, the model trained on the News
+Navigator dataset [17] has been incorporated in the model hub.",1
+"Fig. 4: Illustration of (a) the original historical Japanese document with layout
+detection results and (b) a recreated version of the document image that achieves
+much better character recognition recall. The reorganization algorithm rearranges
+the tokens based on the their detected bounding boxes given a maximum allowed
+height.
+4 LayoutParser Community Platform",1
+"Beyond DL models, LayoutParser also promotes the sharing of entire doc-
+ument digitization pipelines. For example, sometimes the pipeline requires the
+combination of multiple DL models to achieve better accuracy. Currently, pipelines
+are mainly described in academic papers and implementations are often not pub-
+licly available. To this end, the LayoutParser community platform also enables
+the sharing of layout pipelines to promote the discussion and reuse of techniques.
+For each shared pipeline, it has a dedicated project page, with links to the source
+code, documentation, and an outline of the approaches. A discussion panel is
+provided for exchanging ideas. Combined with the core LayoutParser library,
+users can easily build reusable components based on the shared pipelines and
+apply them to solve their unique problems",1
+"5 Use Cases
+The core objective of LayoutParser is to make it easier to create both large-scale
+and light-weight document digitization pipelines. Large-scale document processing",1
+"ocuses on precision, efficiency, and robustness. The target documents may have
+complicated structures, and may require training multiple layout detection models
+to achieve the optimal accuracy. Light-weight pipelines are built for relatively
+simple documents, with an emphasis on development ease, speed and flexibility.
+Ideally one only needs to use existing resources, and model training should be
+avoided. Through two exemplar projects, we show how practitioners in both
+academia and industry can easily build such pipelines using LayoutParser and
+extract high-quality structured document data for their downstream tasks. The
+source code for these projects will be publicly available in the LayoutParser
+community hub.",1
+"5.1 A Comprehensive Historical Document Digitization Pipeline
+The digitization of historical documents can unlock valuable data that can shed
+light on many important social, economic, and historical questions. Yet due to
+scan noises, page wearing, and the prevalence of complicated layout structures, ob-
+taining a structured representation of historical document scans is often extremely
+complicated.",1
+"In this example, LayoutParser was
+used to develop a comprehensive
+pipeline, shown in Figure 5, to gener-
+ate high-quality structured data from
+historical Japanese firm financial ta-
+bles with complicated layouts. The
+pipeline applies two layout models to
+identify different levels of document
+structures and two customized OCR
+engines for optimized character recog-
+nition accuracy",1
+"As shown in Figure 4 (a), the
+document contains columns of text
+written vertically 15, a common style
+in Japanese. Due to scanning noise
+and archaic printing technology, the
+columns can be skewed or have vari-
+able widths, and hence cannot be eas-
+ily identified via rule-based methods.
+Within each column, words are sepa-
+rated by white spaces of variable size,
+and the vertical positions of objects
+can be an indicator of their layout
+type",1
+"To decipher the complicated layout
+structure, two object detection models have been trained to recognize individual
+columns and tokens, respectively. A small training set (400 images with approxi-
+mately 100 annotations each) is curated via the active learning based annotation
+tool [32] in LayoutParser. The models learn to identify both the categories and
+regions for each token or column via their distinct visual features. The layout
+data structure enables easy grouping of the tokens within each column, and
+rearranging columns to achieve the correct reading orders based on the horizontal
+position. Errors are identified and rectified via checking the consistency of the
+model predictions. Therefore, though trained on a small dataset, the pipeline
+achieves a high level of layout detection accuracy: it achieves a 96.97 AP [19]
+score across 5 categories for the column detection model, and a 89.23 AP across
+4 categories for the token detection model",1
+"A combination of character recognition methods is developed to tackle the
+unique challenges in this document. In our experiments, we found that irregular
+spacing between the tokens led to a low character recognition recall rate, whereas
+existing OCR models tend to perform better on densely-arranged texts. To
+overcome this challenge, we create a document reorganization algorithm that
+rearranges the text based on the token bounding boxes detected in the layout
+analysis step. Figure 4 (b) illustrates the generated image of dense text, which is
+sent to the OCR APIs as a whole to reduce the transaction costs. The flexible
+coordinate system in LayoutParser is used to transform the OCR results relative
+to their original positions on the page",1

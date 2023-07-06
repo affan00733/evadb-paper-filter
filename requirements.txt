@@ -1,0 +1,17 @@
+langchain
+evadb
+pandas
+numpy
+openai
+python-dotenv
+pymupdf
+transformers
+datasets 
+evaluate
+scikit-learn
+torch 
+torchvision 
+torchaudio
+transformers[torch]
+huggingface_hub
+ipywidgets
